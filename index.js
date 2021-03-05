@@ -120,10 +120,9 @@ class Dragon {
 
 
 // making instances of step class
-var firstStep = new GameStep("description.....would you like to read the message? (yes/no) ");
+var firstStep = new GameStep("description.....would you like to read the message? (yes/no)");
 var secondStep = new GameStep("would you like to accept the quest (yes/no) ");
 var thirdStep = new GameStep("That's very brave of you, to prepare for the quest you'll need a weapon, with the time you have you can only travel to one of these places to acquire one item to assist you in the battle against the mighty dragon. Would you like to go to place 1 for an axe or place 2 for a spear? ")
-
 
 
 
@@ -160,13 +159,13 @@ function startGame() {
 }
 
 function battle(weapon) {
-//ask about battle
-var fourthStep = new GameStep(`Are you ready to battle the dragon with your ${weapon.name}? (yes/no) `)
-let finalMessage = prompt(fourthStep.message);
-if (finalMessage === "yes") {
-  console.log("Onward!")
-}
-else {console.log("You went home")}
+  //ask about battle
+  var fourthStep = new GameStep(`Are you ready to battle the dragon with your ${weapon.name}? (yes/no) `)
+  let finalMessage = prompt(fourthStep.message);
+  if (finalMessage === "yes") {
+    console.log("Onward!")
+  }
+  else {console.log("You went home")}
 }
 
 startGame();
