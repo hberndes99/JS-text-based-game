@@ -1,21 +1,14 @@
-
-const rl = require("readline");
-const readline = rl.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
 //getting user input
-const prompt = require('prompt-sync')({ sigint: true });
+const rl = require("readline");
+ const readline = rl.createInterface({
+   input: process.stdin,
+   output: process.stdout,
+ });
+//const prompt = require('prompt-sync')({ sigint: true });
+//importing modules
 const FCG = require("fantasy-content-generator");
-
-
-
-// making generic game step class
-class GameStep {
-  constructor(message, input) {
-    this.message = message;
-  }
-}
+const GameStep = require("./gamesteps.js");
+const Dragon = require("./dragonclass.js");
 
  class Weapon {
   constructor(name,score) {
@@ -24,36 +17,20 @@ class GameStep {
   }
 }
 
-class Dragon {
-  constructor(name, strength) {
-    this.name = name;
-    this.strength = strength;
-  }
-  checkStrength(strengthLevel, hits) {
-        if (strengthLevel > 50) { 
-            console.log(`oh no! You only managed to hit the dragon ${hits} times, you were defeated!`);
-            
-        }
-        else {console.log("you slayed the dragon!");
-     }
-    }
-  fight(hits) {
-    let strengthLevel = this.strength - hits;
-    this.checkStrength(strengthLevel, hits);
-    }
-}
+//instances of weapon class
+var weapon1 = new Weapon(`${FCG.MagicItems.generate().formattedData.title}`, 20);
+var weapon2 = new Weapon(`${FCG.MagicItems.generate().formattedData.title}`, 70);
 
-//instances of objects
 
+//instances of game steps class
 var firstMessage = new GameStep("description.....would you like to read the message? (yes/no)");
 var secondMessage = new GameStep("would you like to accept the quest (yes/no) ");
-var thirdMessage = new GameStep("That's very brave of you, to prepare for the quest you'll need a weapon, with the time you have you can only travel to one of these places to acquire one item to assist you in the battle against the mighty dragon. Would you like to go to place 1 for an axe or place 2 for a spear? ")
+var thirdMessage = new GameStep(`That's very brave of you, to prepare for the quest you'll need a weapon, with the time you have you can only travel to one of these places to acquire one item to assist you in the battle against the mighty dragon. Would you like to go to the ${FCG.Settlements.generate().establishments.formattedData.type} for a ${weapon1.name} or the ${FCG.Settlements.generate().establishments.formattedData.type} for a ${weapon2.name}? (type '1' or '2') `)
 var sixthMessage = new GameStep(`Are you ready to battle the dragon with your weapon (yes/no) `);
 var seventhMessage = new GameStep("would you like to battle a red, green or blue dragon?");
 
-var axe = new Weapon(`${FCG.MagicItems.generate().title}`, 20);
-let spear = new Weapon("Dragon Piercer", 70);
 
+//instances of dragon class
 var red = new Dragon ("fireball", 70);
 var blue = new Dragon ("scaly", 60);
 var green = new Dragon ("firebreather", 75);
@@ -93,20 +70,17 @@ var green = new Dragon ("firebreather", 75);
       },
     },
     fourthStep: {
-      message: "You have travelled to the armoury of the land. Please speak to the blacksmith to acquire the \"Leviathan Axe\" (yes) ",
+      message: `You have travelled to the armoury of the land. Please speak to the blacksmith to acquire the ${weapon1.name} (yes) `,
       yes: "sixthStep"
     },
     fifthStep: {
-      message: "You have travelled to the special armoury of the land. Please speak to the blacksmith to acquire the magical spear \"Dragon Piercer\" ...",
+      message: `You have travelled to the special armoury of the land. Please speak to the blacksmith to acquire the ${weapon2.name} ...`,
       yes: "sixthStep"
     },
     sixthStep: {
       message: sixthMessage.message,
       yes: "seventhStep",
-      no: () => {
-        console.log("Bye then!");
-        readline.close();
-      },
+      no: "areYouSure"
     },
     seventhStep: {
       message: seventhMessage.message,
@@ -122,6 +96,14 @@ var green = new Dragon ("firebreather", 75);
         blue.fight(generateRandomNumber(40));
         newGame();
       }
+    },
+    areYouSure: {
+      message: "Are you sure? (yes/no)",
+      yes: () => {
+        console.log("Oh, that's a shame, you've come so far! But goodbye!");
+        readline.close();
+      },
+      no: "sixthStep"
     }
   }
 
@@ -141,7 +123,7 @@ function startGame() {
   let currentStep = "start";
 
 function logStep() {
-    const step = steps[currentStep];
+    const step = steps[currentStep];  // -> step = steps["start"] -> const steps = {start:...}
 
     if (step) {
       readline.question(`${step.message || ""} `, (input) => {
