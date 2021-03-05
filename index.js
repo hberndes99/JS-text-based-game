@@ -74,11 +74,13 @@ var green = new Dragon (`${FCG.Names.generate().name} the Dragon`, 75);
     },
     fourthStep: {
       message: `You have travelled to the ${place1}. Please speak to the blacksmith to acquire the ${weapon1.name} (yes) `,
-      yes: "sixthStep"
+      yes: "sixthStep",
+      //need riddle/whatever
     },
     fifthStep: {
       message: `You have travelled to the ${place2} of the land. Please speak to the blacksmith to acquire the ${weapon2.name} ...`,
-      yes: "sixthStep"
+      yes: "sixthStep",
+      //need riddle/whatever
     },
     sixthStep: {
       message: sixthMessage.message,
@@ -183,6 +185,5 @@ function logStep() {
 function generateRandomNumber(max) {
     return Math.floor(Math.random() * max);
 }
-
 
 startGame();
