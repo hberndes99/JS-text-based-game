@@ -6,6 +6,7 @@ const readline = rl.createInterface({
 });
 //getting user input
 const prompt = require('prompt-sync')({ sigint: true });
+const FCG = require("fantasy-content-generator");
 
 
 
@@ -50,7 +51,7 @@ var thirdMessage = new GameStep("That's very brave of you, to prepare for the qu
 var sixthMessage = new GameStep(`Are you ready to battle the dragon with your weapon (yes/no) `);
 var seventhMessage = new GameStep("would you like to battle a red, green or blue dragon?");
 
-var axe = new Weapon("Leviathan Axe", 20);
+var axe = new Weapon(`${FCG.MagicItems.generate().title}`, 20);
 let spear = new Weapon("Dragon Piercer", 70);
 
 var red = new Dragon ("fireball", 70);
@@ -115,11 +116,11 @@ var green = new Dragon ("firebreather", 75);
         },
       green: () => {
           green.fight(generateRandomNumber(40));
-          readline.close();
+          newGame();
         },
       blue: () => {
         blue.fight(generateRandomNumber(40));
-        readline.close();
+        newGame();
       }
     }
   }
@@ -160,9 +161,9 @@ function logStep() {
       step = steps[currentStep].blue;
     } else if (answer === "green") {
       step = steps[currentStep].green;
-    } else if (isNumber(answer) == 1) {
+    } else if (parseInt(answer) === 1) {
       step = steps[currentStep].one;
-    } else if (isNumber(answer) == 2) {
+    } else if (parseInt(answer) === 2) {
       step = steps[currentStep].two;
     } else if (answer === "no") {
       step = steps[currentStep].no;
@@ -170,13 +171,6 @@ function logStep() {
       console.log("Invalid input! Please try again.");
     step = steps[currentStep];
   }
-// error handling
-    // else if (answer === "no") {
-    //     step = steps[currentStep].no;
-    // } else {
-    //     console.log("Invalid input! Please try again.");
-    //     step = steps[currentStep];
-    // }
 
     if (typeof step === "function") {
       step();
