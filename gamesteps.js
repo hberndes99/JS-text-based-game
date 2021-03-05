@@ -5,3 +5,4 @@ class GameStep {
   }
 }
 module.exports = GameStep;
+

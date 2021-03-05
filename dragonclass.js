@@ -5,10 +5,10 @@ class Dragon {
   }
   checkStrength(strengthLevel, hits) {
         if (strengthLevel > 50) { 
-            console.log(`oh no! You only managed to hit the dragon ${hits} times, you were defeated!`);
+            console.log(`oh no! You only managed to hit ${this.name} ${hits} times, you were defeated!`);
             
         }
-        else {console.log("you slayed the dragon!");
+        else {console.log(`You slayed ${this.name} and managed to free the village people! Your reward is 100 gold coins`);
      }
     }
   fight(hits) {

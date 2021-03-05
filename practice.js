@@ -5,10 +5,12 @@ const rl = require("readline");
    output: process.stdout,
  });
 //const prompt = require('prompt-sync')({ sigint: true });
+
 //importing modules
 const FCG = require("fantasy-content-generator");
 const GameStep = require("./gamesteps.js");
 const Dragon = require("./dragonclass.js");
+
 
  class Weapon {
   constructor(name,score) {
@@ -20,20 +22,21 @@ const Dragon = require("./dragonclass.js");
 //instances of weapon class
 var weapon1 = new Weapon(`${FCG.MagicItems.generate().formattedData.title}`, 20);
 var weapon2 = new Weapon(`${FCG.MagicItems.generate().formattedData.title}`, 70);
-
+var place1 = FCG.Settlements.generate().establishments.formattedData.type;
+var place2 = FCG.Settlements.generate().establishments.formattedData.type;
 
 //instances of game steps class
-var firstMessage = new GameStep("description.....would you like to read the message? (yes/no)");
-var secondMessage = new GameStep("would you like to accept the quest (yes/no) ");
-var thirdMessage = new GameStep(`That's very brave of you, to prepare for the quest you'll need a weapon, with the time you have you can only travel to one of these places to acquire one item to assist you in the battle against the mighty dragon. Would you like to go to the ${FCG.Settlements.generate().establishments.formattedData.type} for a ${weapon1.name} or the ${FCG.Settlements.generate().establishments.formattedData.type} for a ${weapon2.name}? (type '1' or '2') `)
+var firstMessage = new GameStep(`You are on a journey to ${FCG.Names.generate().name}, after travelling for 3 weeks you've arrived at a village to stop for a nights sleep. The following morning you awake to someone knocking on your door, you open the door to find a stranger who passes you a scroll, would you like to read the message? (yes/no)`);
+var secondMessage = new GameStep(`\"My name is ${FCG.Names.generate().name} and I'm from ${FCG.Names.generate().name}, we are under attack from dragons and have no one to help us. We need a brave hero to come and rescue us\" Would you like to accept this quest (yes/no) `);
+var thirdMessage = new GameStep(`That's very brave of you, to prepare for the quest you'll need a weapon, with the time you have you can only travel to one of these places to acquire one item to assist you in the battle against the mighty dragons. Would you like to go to the ${place1} for a ${weapon1.name} or the ${place2} for a ${weapon2.name}? (type '1' or '2') `)
 var sixthMessage = new GameStep(`Are you ready to battle the dragon with your weapon (yes/no) `);
-var seventhMessage = new GameStep("would you like to battle a red, green or blue dragon?");
+var seventhMessage = new GameStep("Would you like to battle a red, green or blue dragon?");
 
 
 //instances of dragon class
-var red = new Dragon ("fireball", 70);
-var blue = new Dragon ("scaly", 60);
-var green = new Dragon ("firebreather", 75);
+var red = new Dragon (`${FCG.Names.generate().name} the Dragon`, 70);
+var blue = new Dragon (`${FCG.Names.generate().name} the Dragon`, 60);
+var green = new Dragon (`${FCG.Names.generate().name} the Dragon`, 75);
 
   const steps = {
     start: {
@@ -70,11 +73,11 @@ var green = new Dragon ("firebreather", 75);
       },
     },
     fourthStep: {
-      message: `You have travelled to the armoury of the land. Please speak to the blacksmith to acquire the ${weapon1.name} (yes) `,
+      message: `You have travelled to the ${place1}. Please speak to the blacksmith to acquire the ${weapon1.name} (yes) `,
       yes: "sixthStep"
     },
     fifthStep: {
-      message: `You have travelled to the special armoury of the land. Please speak to the blacksmith to acquire the ${weapon2.name} ...`,
+      message: `You have travelled to the ${place2} of the land. Please speak to the blacksmith to acquire the ${weapon2.name} ...`,
       yes: "sixthStep"
     },
     sixthStep: {
@@ -123,7 +126,7 @@ function startGame() {
   let currentStep = "start";
 
 function logStep() {
-    const step = steps[currentStep];  // -> step = steps["start"] -> const steps = {start:...}
+    const step = steps[currentStep];
 
     if (step) {
       readline.question(`${step.message || ""} `, (input) => {
