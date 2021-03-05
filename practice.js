@@ -111,7 +111,7 @@ var green = new Dragon ("firebreather", 75);
       message: seventhMessage.message,
       red: () => {
         red.fight(generateRandomNumber(40));
-        readline.close();
+        newGame();
         },
       green: () => {
           green.fight(generateRandomNumber(40));
@@ -124,18 +124,22 @@ var green = new Dragon ("firebreather", 75);
     }
   }
 
-/*function startGame() {
+  function newGame() {
+    readline.question(`would you like to play again? (yes/no) `, (input) => {
+      if (input === "yes") {
+        startGame()
+      } 
+      else {
+        console.log("okay bye");
+        readline.close();
+      }
+    });
+  }
+
+function startGame() {
   let currentStep = "start";
 
-},*/
-function endGame(){
-    if (checkStrength.strengthLevel < 50) {
-      startGame()
-    } 
-    
- }
-
-  function logStep() {
+function logStep() {
     const step = steps[currentStep];
 
     if (step) {
@@ -160,10 +164,12 @@ function endGame(){
       step = steps[currentStep].one;
     } else if (isNumber(answer) == 2) {
       step = steps[currentStep].two;
-    }
-    else {
+    } else if (answer === "no") {
       step = steps[currentStep].no;
-    }
+  } else {
+      console.log("Invalid input! Please try again.");
+    step = steps[currentStep];
+  }
 // error handling
     // else if (answer === "no") {
     //     step = steps[currentStep].no;
@@ -180,7 +186,7 @@ function endGame(){
     if (typeof step === "string") {
       currentStep = step;
     } else {
-      currentStep = "end";
+      currentStep = currentStep;
     }
     logStep();
   }
