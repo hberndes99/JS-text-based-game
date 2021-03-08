@@ -29,7 +29,7 @@ var place2 = FCG.Settlements.generate().establishments.formattedData.type;
 var firstMessage = new GameStep(`You are on a journey to ${FCG.Names.generate().name}, after travelling for 3 weeks you've arrived at a village to stop for a nights sleep. The following morning you awake to someone knocking on your door, you open the door to find a stranger who passes you a scroll, would you like to read the message? (yes/no)`);
 var secondMessage = new GameStep(`\"My name is ${FCG.Names.generate().name} and I'm from ${FCG.Names.generate().name}, we are under attack from dragons and have no one to help us. We need a brave hero to come and rescue us\" Would you like to accept this quest (yes/no) `);
 var thirdMessage = new GameStep(`That's very brave of you, to prepare for the quest you'll need a weapon, with the time you have you can only travel to one of these places to acquire one item to assist you in the battle against the mighty dragons. Would you like to go to the ${place1} for a ${weapon1.name} or the ${place2} for a ${weapon2.name}? (type '1' or '2') `)
-var sixthMessage = new GameStep(`Are you ready to battle the dragon with your weapon (yes/no) `);
+var sixthMessage = new GameStep(`That's correct! Are you ready to battle the dragon with your weapon (yes/no) `);
 var seventhMessage = new GameStep("Would you like to battle a red, green or blue dragon?");
 
 
@@ -74,13 +74,17 @@ var green = new Dragon (`${FCG.Names.generate().name} the Dragon`, 75);
     },
     fourthStep: {
       message: `You have travelled to the ${place1}. Please speak to the blacksmith to acquire the ${weapon1.name} (yes) `,
-      yes: "sixthStep",
-      //need riddle/whatever
+      message: `Hello there stranger. Solve this riddle to acquire the weapon: I Am An Eye Set In A Blue Face. My Gaze Feeds The World. If I Go Blind So Does The World. Type '1' for: The Sun or Type '2' for the Moon`,
+      one: "sixthStep",
+      two: "tryAgain"
+      
     },
     fifthStep: {
       message: `You have travelled to the ${place2} of the land. Please speak to the blacksmith to acquire the ${weapon2.name} ...`,
-      yes: "sixthStep",
-      //need riddle/whatever
+      message: `Hello there stranger. Solve this riddle to acquire the weapon: I cover cities and destroy mountains, I make men blind, yet help them see.. Type '1' for: Sand or Type '2' Water`,
+      one: "sixthStep",
+      two: "tryAgain"
+      
     },
     sixthStep: {
       message: sixthMessage.message,
@@ -109,6 +113,11 @@ var green = new Dragon (`${FCG.Names.generate().name} the Dragon`, 75);
         readline.close();
       },
       no: "sixthStep"
+    },
+    tryAgain: {
+      message: "Incorrect answer try again please: ",
+      one: "sixthStep",
+      two: "tryAgain"
     }
   }
 
