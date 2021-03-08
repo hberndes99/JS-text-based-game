@@ -10,14 +10,7 @@ const rl = require("readline");
 const FCG = require("fantasy-content-generator");
 const GameStep = require("./gamesteps.js");
 const Dragon = require("./dragonclass.js");
-
-
- class Weapon {
-  constructor(name,score) {
-    this.name = name;
-    this.score = score;
-  }
-}
+const Weapon = require("./weaponclass.js");
 
 //instances of weapon class
 var weapon1 = new Weapon(`${FCG.MagicItems.generate().formattedData.title}`, 20);
@@ -73,18 +66,22 @@ var green = new Dragon (`${FCG.Names.generate().name} the Dragon`, 75);
       },
     },
     fourthStep: {
-      message: `You have travelled to the ${place1}. Please speak to the blacksmith to acquire the ${weapon1.name} (yes) `,
-      message: `Hello there stranger. Solve this riddle to acquire the weapon: I Am An Eye Set In A Blue Face. My Gaze Feeds The World. If I Go Blind So Does The World. Type '1' for: The Sun or Type '2' for the Moon`,
-      one: "sixthStep",
-      two: "tryAgain"
-      
+      message: "You have travelled to the " + place1 + ". Please speak to the blacksmith to acquire the " + weapon1.name + " (yes) ",
+      yes: "riddleOne"
+    },
+    riddleOne: {
+        message: "Hello there stranger. Solve this riddle to acquire the weapon: I Am An Eye Set In A Blue Face. My Gaze Feeds The World. If I Go Blind So Does The World. Type '1' for: The Sun or Type '2' for the Moon",
+        one: "sixthStep",
+        two: "tryAgain"
     },
     fifthStep: {
-      message: `You have travelled to the ${place2} of the land. Please speak to the blacksmith to acquire the ${weapon2.name} ...`,
-      message: `Hello there stranger. Solve this riddle to acquire the weapon: I cover cities and destroy mountains, I make men blind, yet help them see.. Type '1' for: Sand or Type '2' Water`,
-      one: "sixthStep",
-      two: "tryAgain"
-      
+        message: "You have travelled to the " + place2 + " of the land. Please speak to the blacksmith to acquire the " + weapon2.name + " (yes) ",
+        yes: "riddleTwo"
+    },
+    riddleTwo: {
+        message: "Hello there stranger. Solve this riddle to acquire the weapon: I cover cities and destroy mountains, I make men blind, yet help them see.. Type '1' for: Sand or Type '2' Water",
+        one: "sixthStep",
+        two: "tryAgain"
     },
     sixthStep: {
       message: sixthMessage.message,
